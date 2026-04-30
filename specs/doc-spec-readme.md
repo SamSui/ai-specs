@@ -635,9 +635,9 @@ v{主版本}.{次版本}-MVP
 |------|------|------|
 | **PRD v1.2** | `specs/prd.md` | 产品需求 |
 | **architecture-design v1.4** | `specs/architecture-design.md` | 技术架构 |
-| **优秀 README 示例** | `artifacts/algorithm/README.md` | 最完整示例 |
-| **优秀 README 示例** | `artifacts/backend/algorithm-platform/README.md` | 后端示例 |
-| **优秀 README 示例** | `artifacts/frontend/admin-console/README.md` | 前端示例 |
+| **优秀 README 示例** | `algo/README.md` | 最完整示例 |
+| **优秀 README 示例** | `backend/algorithm-platform/README.md` | 后端示例 |
+| **优秀 README 示例** | `frontend/README.md` | 前端示例 |
 
 ---
 

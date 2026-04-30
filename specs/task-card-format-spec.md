@@ -19,8 +19,8 @@ description: 基于: 任务卡片规范 v2.1 + Agent 系统优化经验 本版�
 
 **GC-01: Scope 必须精确到文件/模块级别**
 - Scope 模糊 = 范围蔓延的根因
-- ❌ `artifacts/backend/` · `artifacts/algorithm/`
-- ✅ `artifacts/backend/data-adapter` · `artifacts/backend/data-adapter/src/main/java/com.[公司域名].[项目缩写].adapter/*Adapter.java`
+- ❌ `backend/` · `algo/`
+- ✅ `backend/data-adapter` · `backend/data-adapter/src/main/java/com.[公司域名].[项目缩写].adapter/*Adapter.java`
 
 **GC-02: 验收标准必须独立存在且每条可测试**
 - 无独立 AC = 无法判断完成 = 交付变成黑盒
@@ -62,13 +62,13 @@ tasks/
 
 **Definition 类字段（KB 章节）→ 写绝对路径**：
 - `## Knowledge Base` 章节：定义知识库的实际位置，**必须写绝对路径**
-  - 项目知识库 → `/home/openclaw/.openclaw/workspace/shared/projects/{项目名}/specs`
-  - 团队知识库 → `/home/openclaw/.openclaw/workspace/shared/specs`
+  - 项目知识库 → `~/projects/{项目名}/specs`
+  - 团队知识库 → `~/specs`
   - 记忆知识库 → `memory_search` skill
 
 **Usage 类字段（Reference / Deliver To / Scope）→ 用前缀或相对路径**：
 - ✅ `$project_kb/requirements-spec.md`（前缀展开为 `{项目根目录}/specs/requirements-spec.md`）
-- ✅ `$team_kb/task-card-format-spec.md`（前缀展开为 `~/.openclaw/workspace/shared/specs/task-card-format-spec.md`）
+- ✅ `$team_kb/task-card-format-spec.md`（前缀展开为 `document/team/specs/task-card-format-spec.md`）
 - ✅ 绝对路径（如 `/home/openclaw/.../spec.md`）
 - ✅ 项目相对路径（如 `specs/user-stories.md`）
 - ❌ 裸文件名（`spec.md`）—— 无法定位
@@ -84,8 +84,8 @@ tasks/
 
 ```markdown
 ## Knowledge Base
-- **项目知识库** → /home/openclaw/.openclaw/workspace/shared/projects/{项目名}/specs
-- **团队知识库** → /home/openclaw/.openclaw/workspace/shared/specs
+- **项目知识库** → ~/projects/{项目名}/specs
+- **团队知识库** → ~/specs
 - **记忆知识库** → memory_search skill
 ```
 
@@ -126,8 +126,8 @@ tasks/
 ### Scope
 **必须精确到文件/模块级别**，禁止泛指。
 
-- ❌ `artifacts/backend/` · `artifacts/algorithm/`
-- ✅ `artifacts/backend/data-adapter` · `artifacts/backend/data-adapter/src/main/java/com.[公司域名].[项目缩写].adapter/*Adapter.java`
+- ❌ `backend/` · `algo/`
+- ✅ `backend/data-adapter` · `backend/data-adapter/src/main/java/com.[公司域名].[项目缩写].adapter/*Adapter.java`
 
 ### Background
 **为什么做**。说明问题来源和解决什么。上游决策、评审发现、技术债均在此标注。
@@ -246,8 +246,8 @@ tasks/
 | 3 | {可量化} | {执行命令} |
 
 ## Knowledge Base
-- **项目知识库** → /home/openclaw/.openclaw/workspace/shared/projects/{项目名}/specs
-- **团队知识库** → /home/openclaw/.openclaw/workspace/shared/specs
+- **项目知识库** → ~/projects/{项目名}/specs
+- **团队知识库** → ~/specs
 - **记忆知识库** → memory_search skill
 ```
 
@@ -292,8 +292,8 @@ tasks/
 ## 反模式
 
 ### Scope 泛指
-- ❌ `artifacts/backend/` · `specs/`
-- ✅ `artifacts/backend/data-adapter/src/main/java/com.[公司域名].[项目缩写].adapter/*Adapter.java`
+- ❌ `backend/` · `specs/`
+- ✅ `backend/data-adapter/src/main/java/com.[公司域名].[项目缩写].adapter/*Adapter.java`
 
 ### Acceptance Criteria 不可测试
 - ❌ `代码可运行` · `功能完整` · `性能良好`
@@ -309,7 +309,7 @@ tasks/
 
 ### 路径无效
 - ❌ `spec.md` · `T-FIX-01.md`（裸文件名）
-- ✅ 绝对路径或 `tasks/20260405-M1-fix/cards/T-FIX-01.md`
+- ✅ 绝对路径或 `../../archived/tasks/20260405-M1-fix/cards/T-FIX-01.md`
 
 ---
 

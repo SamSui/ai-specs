@@ -815,7 +815,7 @@ public class DomainArchitectureRules {
 | 需求规格 | `../../specs/requirements-spec.md` |
 | 架构设计 | `../../specs/architecture-design.md` |
 | ERD | `../../specs/ERD.md` |
-| 后端项目 README | `../../artifacts/backend/README.md` |
+| 后端项目 README | `../../backend/README.md` |
 
 ---
 

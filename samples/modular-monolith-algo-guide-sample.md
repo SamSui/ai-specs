@@ -1122,9 +1122,9 @@ docker push [项目缩写]/algorithm-text-purify:latest
 | 文档 | 路径 |
 |------|------|
 | M2.4 调研报告 | `../../M2.4-design-research/final.md` |
-| Java版落地指南 | `../../../artifacts/M2.4-design/落地指南_模块化单体2.0_[项目名称].md` |
-| 架构师规则集 | `../../../artifacts/M2.4-design/规则集_架构师.md` |
-| Java AlgorithmRegistrationRequest | `../../../artifacts/backend.bk/algorithm-platform/src/main/java/com/[项目缩写]/algorithm/registry/dto/AlgorithmRegistrationRequest.java` |
+| Java版落地指南 | `../../.././M2.4-design/落地指南_模块化单体2.0_[项目名称].md` |
+| 架构师规则集 | `../../.././M2.4-design/规则集_架构师.md` |
+| Java AlgorithmRegistrationRequest | `../../.././backend.bk/algorithm-platform/src/main/java/com/[项目缩写]/algorithm/registry/dto/AlgorithmRegistrationRequest.java` |
 | Python调研素材 | `./materials/00-index.md` |
 
 ---

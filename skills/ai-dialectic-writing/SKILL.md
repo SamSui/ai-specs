@@ -84,7 +84,7 @@ reports/{TaskId}/
 **主 Agent 与用户确认**：
 - 文档主题 / 类型：`[深度调研]` / `[技术方案]` / `[竞品分析]` / `[研究报告]`
 - 评审方向（≥2 个）：`[技术可行性]` `[数据准确性]` `[市场分析]` `[合规风险]` 等
-- **REPORTS_ROOT**：`/home/openclaw/.openclaw/workspace/shared/reports/{TaskId}/`（或项目子路径，由主Agent在 dispatch 时确认）
+- **REPORTS_ROOT**：`~/reports/{TaskId}/`（或项目子路径，由主Agent在 dispatch 时确认）
 
 **主 Agent 注入 REPORTS_ROOT**：
 在调度 Writer/Reviewer 之前，确认并注入 REPORTS_ROOT 前缀到 task string 的 Deliver To 字段。Writer/Reviewer 不得自行构造路径。

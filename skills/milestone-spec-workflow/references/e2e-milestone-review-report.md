@@ -206,7 +206,7 @@ reviews/M{MilestoneNum}-MILESTONE-REVIEW-E2E-HONESTY-REPORT.md
 
 ### A. 测试运行命令
 ```bash
-cd artifacts/deployment
+cd deployment
 # COMPOSE_FILE环境变量已配，不需要加 -f 参数
 docker compose run --rm test-e2e
 ```
@@ -214,7 +214,7 @@ docker compose run --rm test-e2e
 ### B. 关键文件索引
 | 文件 | 说明 |
 |------|------|
-| `artifacts/tests/e2e/*.spec.ts` | N 个 E2E spec 文件 |
+| `tests/e2e/*.spec.ts` | N 个 E2E spec 文件 |
 
 ### C. 相关决策文档
 | 文档 | 内容 |

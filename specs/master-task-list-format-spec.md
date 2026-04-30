@@ -22,9 +22,9 @@ description: 创建日期: 2026-04-05 创建人: [规范维护者]
 
 | 文件 | 问题表现 | 严重程度 |
 |------|---------|---------|
-| `tasks-20260404.md` | 纯表格形式，无任务描述，无门禁表 | 🔴 高 |
-| `tasks-20260404-7.md` | 包含问题分析、任务详情、门禁表，但无标准章节结构 | 🟡 中 |
-| `tasks-20260405-2.md` | 包含规范草稿，但未独立成文，混在任务详情中 | 🟡 中 |
+| `../../archived/tasks/tasks-20260404.md` | 纯表格形式，无任务描述，无门禁表 | 🔴 高 |
+| `../../archived/tasks/tasks-20260404-7.md` | 包含问题分析、任务详情、门禁表，但无标准章节结构 | 🟡 中 |
+| `../../archived/tasks/tasks-20260405-2.md` | 包含规范草稿，但未独立成文，混在任务详情中 | 🟡 中 |
 
 ### 1.2 格式不一致导致的问题
 
@@ -298,7 +298,7 @@ MilestoneReview（SPEC-MILESTONE规范）
 |------|-------------|---------|
 | 任务卡片(SPEC-TASKCARD) | `shared/specs/task-card-format-spec.md` | `task-card-format-spec.md` |
 | 主任务清单(SPEC-MASTERTASK) | `shared/specs/master-task-list-format-spec.md` | `master-task-list-format-spec.md` |
-| 项目主任务清单 | `projects/{项目名}/tasks/tasks-YYYYMMDD-{N}.md` | `tasks-20260404-7.md` |
+| 项目主任务清单 | `projects/{项目名}/tasks/tasks-YYYYMMDD-{N}.md` | `../../archived/tasks/tasks-20260404-7.md` |
 | 任务卡片实例 | `projects/{项目名}/tasks/T-XXX/cards/T-XXX.md` | `tasks/T-XXX/cards/T-XXX.md` |
 
 ---
@@ -374,7 +374,7 @@ MilestoneReview（SPEC-MILESTONE规范）
 1. `mvn compile` BUILD SUCCESS 或 javac编译通过率 ≥95%
 2. data-adapter核心5个Adapter测试 → Green
 
-**产出物**: `artifacts/backend/` 编译产物
+**产出物**: `backend/` 编译产物
 
 **任务卡片**: `tasks/T-REV-01/cards/T-REV-01.md`
 

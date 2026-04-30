@@ -342,7 +342,7 @@ Phase 2: 汇总整合（主 agent / 架构师执行）
 
 ## 评审对象
 1. `{项目知识库路径}/specs/FEATURE-MATRIX.md`
-2. `{项目知识库路径}/artifacts/tests/` (测试用例)
+2. `{项目知识库路径}/tests/` (测试用例)
 
 ## 评审任务
 

@@ -41,7 +41,7 @@ description: 以下是工作区的目录结构及各文档、文件夹的用途�
     │   └─ {projectWorkspace} - 项目目录
     │      ├─ docs/         - 项目有价值的公开资料，如白皮书、报告、原始研究等
     │      ├─ specs/        - 项目需求与规格说明
-    │      ├─ artifacts/    - 项目的构建产物与交付件，如代码、测试用例、UI设计等
+    │      ├─ ./    - 项目的构建产物与交付件，如代码、测试用例、UI设计等
     │      ├─ reviews/      - 项目评审文档
     │      ├─ decisions/    - 项目决策文档
     │      └─ archived/     - 项目归档文档
@@ -162,7 +162,7 @@ reports/{TaskId}/
 | 项目规范 | `shared/projects/{projectWorkspace}/specs/` |
 | 项目评审 | `shared/projects/{projectWorkspace}/reviews/` |
 | 项目决策 | `shared/projects/{projectWorkspace}/decisions/` |
-| 项目产出物 | `shared/projects/{projectWorkspace}/artifacts/` |
+| 项目产出物 | `shared/projects/{projectWorkspace}/./` |
 
 ---
 

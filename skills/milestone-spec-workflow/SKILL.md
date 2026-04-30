@@ -127,12 +127,12 @@ flowchart TD
 **目标**：启动 Docker Compose 环境，执行全量 E2E 测试，收集第一手真实数据。
 
 **输入**：
-- `artifacts/tests/e2e/*.spec.ts`
+- `tests/e2e/*.spec.ts`
 - Docker Compose 环境
 
 **执行**：
 ```bash
-cd artifacts/deployment
+cd deployment
 # COMPOSE_FILE环境变量已配，不需要加 -f 参数
 docker compose up -d
 docker compose run --rm test-e2e
@@ -174,7 +174,7 @@ docker compose run --rm test-e2e
 #### 4.2 E2E 诚实报告
 
 **输入**：
-- `artifacts/tests/e2e/*.spec.ts`
+- `tests/e2e/*.spec.ts`
 - `specs/BE-APIS.md`
 
 **输出**：
@@ -195,13 +195,13 @@ docker compose run --rm test-e2e
 - `specs/FEATURE-INVENTORY.md`
 - `specs/FEATURE-MATRIX.md`（v1.N）
 - `specs/user-stories.md`
-- `artifacts/tests/e2e/*.spec.ts`
+- `tests/e2e/*.spec.ts`
 - `reviews/M{x}-MILESTONE-REVIEW-E2E-HONESTY-REPORT.md`
 - `tasks/{date}-M{x}.{y}/reviews/T-E2E-RERUN-report.md`
 - `tasks/{date}-M{x}.{y}/reviews/consolidated-review.md`
 
 **输出**：
-- `artifacts/tests/e2e/test-m{module}-{name}.spec.ts`
+- `tests/e2e/test-m{module}-{name}.spec.ts`
 - `tasks/{date}-M{x}.{y}/reviews/T-E2E-COVER-report.md`
 
 **执行者**：tester
@@ -329,15 +329,15 @@ docs/
 
 | 文档路径 | 内容 | 何时读取 |
 |---------|------|---------|
-| `~/.openclaw/workspace/shared/specs/e2e-testing-method.md` | E2E 测试方法论 | 第三/四/五步 |
-| `~/.openclaw/workspace/shared/specs/e2e-test-session-design.md` | E2E Session 设计方案 | 第三/四/五步 |
-| `~/.openclaw/workspace/shared/specs/e2e-frontend-contract.md` | E2E 与前端协作规范 | 第三/四/五步 |
-| `~/.openclaw/workspace/shared/specs/master-task-list-format-spec.md` | 主任务清单格式规范 | 第七步 |
-| `~/.openclaw/workspace/shared/specs/task-card-format-spec.md` | SPEC-TASKCARD 格式规范 | 第七步 |
-| `~/.openclaw/workspace/shared/specs/规则集_测试工程师.md` | tester 角色规则集 | tester 执行时 |
-| `~/.openclaw/workspace/shared/specs/规则集_架构师.md` | architect 角色规则集 | architect 执行时 |
-| `~/.openclaw/workspace/shared/specs/规则集_开发工程师.md` | developer 角色规则集 | developer 执行时 |
-| `~/.openclaw/workspace/shared/specs/review-rule.md` | 评审通用规则 | 第四步 4.1 |
+| `document/team/specs/e2e-testing-method.md` | E2E 测试方法论 | 第三/四/五步 |
+| `document/team/specs/e2e-test-session-design.md` | E2E Session 设计方案 | 第三/四/五步 |
+| `document/team/specs/e2e-frontend-contract.md` | E2E 与前端协作规范 | 第三/四/五步 |
+| `document/team/specs/master-task-list-format-spec.md` | 主任务清单格式规范 | 第七步 |
+| `document/team/specs/task-card-format-spec.md` | SPEC-TASKCARD 格式规范 | 第七步 |
+| `document/team/specs/规则集_测试工程师.md` | tester 角色规则集 | tester 执行时 |
+| `document/team/specs/规则集_架构师.md` | architect 角色规则集 | architect 执行时 |
+| `document/team/specs/规则集_开发工程师.md` | developer 角色规则集 | developer 执行时 |
+| `document/team/specs/review-rule.md` | 评审通用规则 | 第四步 4.1 |
 | `{知识库路径}/samples/modular-monolith-guide-sample.md` | 后端模块化单体架构规范（样本） | 第二步（BE）|
 | `{知识库路径}/samples/modular-monolith-algo-guide-sample.md` | 算法模块架构规范（样本） | 第二步（AL）|
 

@@ -118,7 +118,7 @@ API E2E（Playwright request） ← 验证后端API契约，不依赖UI
 ## 五、运行方式
 
 ```bash
-cd artifacts/tests/e2e
+cd tests/e2e
 
 # 全部E2E（基座 + 闭环 + 演示大厅 + 算法）
 npx playwright test
@@ -140,7 +140,7 @@ npx playwright test test-m27-*.spec.ts test-system-api.spec.ts
 
 ## 六、编写规范（遵守）
 
-来自 `artifacts/deployment/LEARNING.md` + 工程实践：
+来自 `deployment/LEARNING.md` + 工程实践：
 
 ### 选择器优先级（强制）
 1. `getByRole(role, { name })` — P0，最稳定
