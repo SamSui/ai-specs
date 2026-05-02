@@ -69,7 +69,7 @@ tasks/
 **Usage 类字段（Reference / Deliver To / Scope）→ 用前缀或相对路径**：
 - ✅ `$project_kb/requirements-spec.md`（前缀展开为 `{项目根目录}/specs/requirements-spec.md`）
 - ✅ `$team_kb/task-card-format-spec.md`（前缀展开为 `document/team/specs/task-card-format-spec.md`）
-- ✅ 绝对路径（如 `/home/openclaw/.../spec.md`）
+- ✅ 绝对路径（如 `/home/USER/.../spec.md`）
 - ✅ 项目相对路径（如 `specs/user-stories.md`）
 - ❌ 裸文件名（`spec.md`）—— 无法定位
 

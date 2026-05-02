@@ -1,6 +1,8 @@
 ---
 name: milestone-spec-workflow
 description: 里程碑规范整理与核查对齐工作流，核查代码实现与需求文档的偏离和差异，规划下一版本的里程碑任务计划。触发词：闭环分析 里程碑分析。
+version: v3.0
+last_updated: 2026-04-30
 ---
 
 # Milestone Spec Workflow
@@ -81,6 +83,20 @@ flowchart TD
 
 ---
 
+## Kimi Agent 调度协议
+
+本工作流大量依赖并行 Subagent 执行。主 Agent 通过以下方式调度：
+
+1. **并行提取**（第二步）：3 个 Agent 分别提取 FE/BE/AL 规范，互不依赖
+2. **并行评审**（第四步 4.1）：6 个 Reviewer Agent 同时独立评审，主 Agent 汇总
+3. **角色 Agent**（第五~七步）：tester / architect 等角色由独立 Agent 执行，主 Agent 验收
+4. **状态传递**：通过文件系统读写（`specs/*.md`、`tasks/*/reviews/*.md`）
+5. **阻塞等待**：每步 foreground Agent 完成后，主 Agent 读取产出、检查门禁，再进入下一步
+
+> 所有 Agent 的 prompt 中必须注入 `{WORKSPACE_ROOT}`（项目绝对路径），禁止 hardcoded 路径。
+
+---
+
 ## 核心流程
 
 ### 第一步：提取功能点清单（FEATURE-INVENTORY）
@@ -100,7 +116,7 @@ flowchart TD
 
 **格式**：四层 ID 体系 `{模块}.{子模块}.{功能}.{子功能}`，参考 `references/feature-inventory-template.md`
 
-**执行者**：developer（产品视角）
+**执行者**：主 Agent 或 developer Agent（产品视角）
 
 ---
 
@@ -116,9 +132,20 @@ flowchart TD
 - `specs/BE-APIS.md`
 - `specs/AL-FUNCS.md`
 
-三份文档**同时**并行提取，相互不依赖。
+**执行方式**：主 Agent **并行**调度 3 个 Agent：
 
-**执行者**：developer（前端/后端/算法视角并行）
+```
+Agent(description="FE routes extraction")
+  prompt: 读取 frontend/src/router/ 和 frontend/src/views/，提取所有路由和页面，写入 specs/FE-ROUTES.md
+
+Agent(description="BE APIs extraction")
+  prompt: 读取 backend/*/internal/controller/，提取所有 Controller 和 API 端点，写入 specs/BE-APIS.md
+
+Agent(description="AL funcs extraction")
+  prompt: 读取 algo/api/ 和 algo/src/，提取所有算法接口和端点，写入 specs/AL-FUNCS.md
+```
+
+三份文档**同时**并行提取，相互不依赖。
 
 ---
 
@@ -138,7 +165,7 @@ docker compose up -d
 docker compose run --rm test-e2e
 ```
 
-**执行者**：tester
+**执行者**：tester Agent（或主 Agent 直接执行 Shell）
 
 ---
 
@@ -167,9 +194,24 @@ docker compose run --rm test-e2e
 - `specs/FEATURE-MATRIX.md`（升至 v1.N）
 - `specs/FEATURE-MAP.md`（升至 v1.N）
 
-**执行者**：6人并行独立评审，architect 主持汇总
+**执行方式**：主 Agent **并行**调度 6 个 Reviewer Agent：
 
-详细评审提示词见 `references/REVIEW-TEAM-template.md`
+| Agent | description | 评审视角 | 产出文件 |
+|-------|-------------|---------|---------|
+| architect-reviewer | 架构一致性评审 | 全局一致性、架构决策追溯、跨模块对齐 | architect-review.md |
+| be-reviewer | 后端实现完整性评审 | API 契约、代码落脚点 | developer-be-review.md |
+| fe-reviewer | 前端实现完整性评审 | 路由菜单、UI 交互 | developer-fe-review.md |
+| al-reviewer | 算法实现完整性评审 | Registry 接入、协议支持 | developer-al-review.md |
+| test-reviewer | 测试覆盖与风险评审 | E2E 链路、缺口风险 | developer-test-review.md |
+| pm-reviewer | 需求覆盖与 Phase 边界评审 | PRD 对齐、用户体验 | developer-pm-review.md |
+
+每个 Agent 的 prompt 包含：
+- `{WORKSPACE_ROOT}` 绝对路径
+- 评审对象文件路径（上述 6 份 specs）
+- 角色定义和评审要点（参考 `references/REVIEW-TEAM-template.md`，将其中的 `{项目知识库路径}` 替换为实际 `{WORKSPACE_ROOT}`）
+- 产出路径：`tasks/{date}-M{x}.{y}/reviews/{role}-review.md`
+
+**主 Agent 汇总**：读取 6 份 review，合并输出 `consolidated-review.md`，并更新 `FEATURE-MATRIX.md` / `FEATURE-MAP.md`。
 
 #### 4.2 E2E 诚实报告
 
@@ -183,7 +225,7 @@ docker compose run --rm test-e2e
 
 **内容要求**：参考 `references/e2e-milestone-review-report.md`
 
-**执行者**：tester
+**执行者**：tester Agent
 
 ---
 
@@ -204,7 +246,7 @@ docker compose run --rm test-e2e
 - `tests/e2e/test-m{module}-{name}.spec.ts`
 - `tasks/{date}-M{x}.{y}/reviews/T-E2E-COVER-report.md`
 
-**执行者**：tester
+**执行者**：tester Agent
 
 ---
 
@@ -222,7 +264,7 @@ docker compose run --rm test-e2e
 - `docs/Phase{x}-{y}-完成度报告-对内.md`
 - `docs/Phase{x}-{y}-完成度报告-对外.md`
 
-**执行者**：architect
+**执行者**：architect Agent（或主 Agent）
 
 ---
 
@@ -247,11 +289,11 @@ docker compose run --rm test-e2e
 - `tasks/{date}-M{x}.{y+1}/cards/T-TEST-*.md`
 
 **格式要求**：
-- index.md 参考 `~/.openclaw/shared/specs/master-task-list-format-spec.md`
-- 任务卡参考 `~/.openclaw/shared/specs/task-card-format-spec.md`
+- `index.md` 参考 `document/team/specs/master-task-list-format-spec.md`
+- 任务卡参考 `document/team/specs/task-card-format-spec.md`
 - 任务卡中引用本轮产出物时使用绝对路径
 
-**执行者**：architect
+**执行者**：architect Agent（或主 Agent）
 
 ---
 
@@ -325,6 +367,8 @@ docs/
 | `references/e2e-milestone-review-report.md` | 里程碑 E2E 诚实评审报告格式 | 第四步 4.2 |
 | `references/output-format.md` | 产出物格式规范 | 每步输出时 |
 
+> 使用 `references/REVIEW-TEAM-template.md` 时，需将其中的 `{项目知识库路径}` 占位符替换为实际 `{WORKSPACE_ROOT}`。
+
 ### 共享规范（直接引用绝对路径）
 
 | 文档路径 | 内容 | 何时读取 |
@@ -338,10 +382,8 @@ docs/
 | `document/team/specs/规则集_架构师.md` | architect 角色规则集 | architect 执行时 |
 | `document/team/specs/规则集_开发工程师.md` | developer 角色规则集 | developer 执行时 |
 | `document/team/specs/review-rule.md` | 评审通用规则 | 第四步 4.1 |
-| `{知识库路径}/samples/modular-monolith-guide-sample.md` | 后端模块化单体架构规范（样本） | 第二步（BE）|
-| `{知识库路径}/samples/modular-monolith-algo-guide-sample.md` | 算法模块架构规范（样本） | 第二步（AL）|
 
 **重要**：
 - 本 skill 的 `references/` 目录放 skill 特有的格式模板和方法论
-- 共享规范（`/shared/specs/`）**直接引用绝对路径**，不复制内容
+- 共享规范**直接引用项目内绝对路径**，不复制内容
 - 根据当前执行步骤，只读取当前步骤需要的 reference 文件

@@ -629,7 +629,7 @@ docker compose run --rm -e TESTING_ENTRYPOINT="test-m27-login.spec.ts" test-e2e
 
 后续开发需以"**端到端跑通**"为完成标准，而非"代码片段写完"。
 
-**数据安全**: 所有资料和代码仅允许本地存储（`~/.openclaw/workspace/`），禁止上传至任何云存储或在线文档平台。
+**数据安全**: 所有资料和代码仅允许本地存储（`{PROJECT_ROOT}/`），禁止上传至任何云存储或在线文档平台。
 
 ---
 

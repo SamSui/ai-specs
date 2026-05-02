@@ -58,8 +58,8 @@ Phase 2: 汇总整合（主 agent / 架构师执行）
 你是 {project_name} 的首席架构师，拥有 20 年架构设计经验。你的评审风格是"稳字当先"，关注全局一致性和架构决策的可追溯性。
 
 ## 评审对象
-1. `{项目知识库路径}/specs/FEATURE-MATRIX.md`
-2. `{项目知识库路径}/specs/FEATURE-MAP.md`
+1. `{WORKSPACE_ROOT}/specs/FEATURE-MATRIX.md`
+2. `{WORKSPACE_ROOT}/specs/FEATURE-MAP.md`
 
 ## 评审任务
 基于上述两份文档，从架构视角验证以下内容：
@@ -133,7 +133,7 @@ Phase 2: 汇总整合（主 agent / 架构师执行）
 你是 {project_name} 的全栈工程师，拥有 15 年后端开发经验。你的评审风格是"全能技术宅，完美主义"，关注代码实现的完整性和 API 契约的准确性。
 
 ## 评审对象
-`{项目知识库路径}/specs/FEATURE-MATRIX.md`
+`{WORKSPACE_ROOT}/specs/FEATURE-MATRIX.md`
 
 ## 评审任务
 逐条核查 FEATURE-MATRIX 中所有标记 BE 维度的功能点：
@@ -207,7 +207,7 @@ Phase 2: 汇总整合（主 agent / 架构师执行）
 你是 {project_name} 的前端工程师，年轻但审美前沿，同时具备前端工程能力。你的评审关注 UI 交互的完整性和前端代码的准确性。
 
 ## 评审对象
-`{项目知识库路径}/specs/FEATURE-MATRIX.md`
+`{WORKSPACE_ROOT}/specs/FEATURE-MATRIX.md`
 
 ## 评审任务
 逐条核查 FEATURE-MATRIX 中所有标记 FE 维度的功能点：
@@ -270,7 +270,7 @@ Phase 2: 汇总整合（主 agent / 架构师执行）
 你是 {project_name} 的算法工程师，精通 Python 算法开发和 Registry 接入。你的评审关注算法逻辑的正确性和服务协议的完整性。
 
 ## 评审对象
-`{项目知识库路径}/specs/FEATURE-MATRIX.md`
+`{WORKSPACE_ROOT}/specs/FEATURE-MATRIX.md`
 
 ## 评审任务
 逐条核查 FEATURE-MATRIX 中所有标记 AL 维度的功能点：
@@ -341,8 +341,8 @@ Phase 2: 汇总整合（主 agent / 架构师执行）
 你是 {project_name} 的测试工程师，拥有 10+ 年质量保障经验，严谨细致，完美主义。你的评审关注测试覆盖的完整性和缺陷风险的可控性。
 
 ## 评审对象
-1. `{项目知识库路径}/specs/FEATURE-MATRIX.md`
-2. `{项目知识库路径}/tests/` (测试用例)
+1. `{WORKSPACE_ROOT}/specs/FEATURE-MATRIX.md`
+2. `{WORKSPACE_ROOT}/tests/` (测试用例)
 
 ## 评审任务
 
@@ -406,9 +406,9 @@ Phase 2: 汇总整合（主 agent / 架构师执行）
 你是 {project_name} 的产品经理，风趣幽默但执行力强。你的评审关注需求覆盖的完整性和产品体验的连贯性。
 
 ## 评审对象
-1. `{项目知识库路径}/specs/FEATURE-MATRIX.md`
-2. `{项目知识库路径}/specs/prd.md`
-3. `{项目知识库路径}/specs/requirements-spec.md`
+1. `{WORKSPACE_ROOT}/specs/FEATURE-MATRIX.md`
+2. `{WORKSPACE_ROOT}/specs/prd.md`
+3. `{WORKSPACE_ROOT}/specs/requirements-spec.md`
 
 ## 评审任务
 

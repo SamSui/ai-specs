@@ -1,16 +1,17 @@
 ---
 name: self-improvement
-description: "Captures learnings, errors, and corrections to enable continuous improvement. Use when: (1) A command or operation fails unexpectedly, (2) User corrects Claude ('No, that's wrong...', 'Actually...'), (3) User requests a capability that doesn't exist, (4) An external API or tool fails, (5) Claude realizes its knowledge is outdated or incorrect, (6) A better approach is discovered for a recurring task. Also review learnings before major tasks."
-metadata:
+description: "Captures learnings, errors, and corrections to enable continuous improvement. Use when: (1) A command or operation fails unexpectedly, (2) User corrects the agent ('No, that's wrong...', 'Actually...'), (3) User requests a capability that doesn't exist, (4) An external API or tool fails, (5) The agent realizes its knowledge is outdated or incorrect, (6) A better approach is discovered for a recurring task. Also review learnings before major tasks."
+version: v3.0
+last_updated: 2026-04-30
 ---
 
 # Self-Improvement Skill
 
-Log learnings and errors to markdown files for continuous improvement. Coding agents can later process these into fixes, and important learnings get promoted to project memory.
+Log learnings and errors to markdown files for continuous improvement. Agents can later process these into fixes, and important learnings get promoted to project memory.
 
 ## First-Use Initialisation
 
-Before logging anything, ensure the `.learnings/` directory and files exist in the project or workspace root. If any are missing, create them:
+Before logging anything, ensure the `.learnings/` directory and files exist in the project root. If any are missing, create them:
 
 ```bash
 mkdir -p .learnings
@@ -23,7 +24,7 @@ Never overwrite existing files. This is a no-op if `.learnings/` is already init
 
 Do not log secrets, tokens, private keys, environment variables, or full source/config files unless the user explicitly asks for that level of detail. Prefer short summaries or redacted excerpts over raw command output or full transcripts.
 
-If you want automatic reminders or setup assistance, use the opt-in hook workflow described in [Hook Integration](#hook-integration).
+---
 
 ## Quick Reference
 
@@ -35,117 +36,34 @@ If you want automatic reminders or setup assistance, use the opt-in hook workflo
 | API/external tool fails | Log to `.learnings/ERRORS.md` with integration details |
 | Knowledge was outdated | Log to `.learnings/LEARNINGS.md` with category `knowledge_gap` |
 | Found better approach | Log to `.learnings/LEARNINGS.md` with category `best_practice` |
-| Simplify/Harden recurring patterns | Log/update `.learnings/LEARNINGS.md` with `Source: simplify-and-harden` and a stable `Pattern-Key` |
 | Similar to existing entry | Link with `**See Also**`, consider priority bump |
-| Broadly applicable learning | Promote to `CLAUDE.md`, `AGENTS.md`, and/or `.github/copilot-instructions.md` |
-| Workflow improvements | Promote to `AGENTS.md` (OpenClaw workspace) |
-| Tool gotchas | Promote to `TOOLS.md` (OpenClaw workspace) |
-| Behavioral patterns | Promote to `SOUL.md` (OpenClaw workspace) |
-
-## OpenClaw Setup (Recommended)
-
-OpenClaw is the primary platform for this skill. It uses workspace-based prompt injection with automatic skill loading.
-
-### Installation
-
-**Via ClawdHub (recommended):**
-```bash
-clawdhub install self-improvement
-```
-
-**Manual:**
-```bash
-git clone https://github.com/peterskoett/self-improvement.git ~/.openclaw/skills/self-improvement
-```
-
-Remade for openclaw from original repo : https://github.com/pskoett/pskoett-ai-skills - https://github.com/pskoett/pskoett-ai-skills/tree/main/skills/self-improvement
-
-### Workspace Structure
-
-OpenClaw injects these files into every session:
-
-```
-~/.openclaw/workspace/
-├── AGENTS.md          # Multi-agent workflows, delegation patterns
-├── SOUL.md            # Behavioral guidelines, personality, principles
-├── TOOLS.md           # Tool capabilities, integration gotchas
-├── MEMORY.md          # Long-term memory (main session only)
-├── memory/            # Daily memory files
-│   └── YYYY-MM-DD.md
-└── .learnings/        # This skill's log files
-    ├── LEARNINGS.md
-    ├── ERRORS.md
-    └── FEATURE_REQUESTS.md
-```
-
-### Create Learning Files
-
-```bash
-mkdir -p ~/.openclaw/workspace/.learnings
-```
-
-Then create the log files (or copy from `assets/`):
-- `LEARNINGS.md` — corrections, knowledge gaps, best practices
-- `ERRORS.md` — command failures, exceptions
-- `FEATURE_REQUESTS.md` — user-requested capabilities
-
-### Promotion Targets
-
-When learnings prove broadly applicable, promote them to workspace files:
-
-| Learning Type | Promote To | Example |
-|---------------|------------|---------|
-| Behavioral patterns | `SOUL.md` | "Be concise, avoid disclaimers" |
-| Workflow improvements | `AGENTS.md` | "Spawn sub-agents for long tasks" |
-| Tool gotchas | `TOOLS.md` | "Git push needs auth configured first" |
-
-### Inter-Session Communication
-
-OpenClaw provides tools to share learnings across sessions:
-
-- **sessions_list** — View active/recent sessions
-- **sessions_history** — Read another session's transcript  
-- **sessions_send** — Send a learning to another session
-- **sessions_spawn** — Spawn a sub-agent for background work
-
-Use these only in trusted environments and only when the user explicitly wants cross-session sharing. Prefer sending a short sanitized summary and relevant file paths, not raw transcripts, secrets, or full command output.
-
-### Optional: Enable Hook
-
-For automatic reminders at session start:
-
-```bash
-# Copy hook to OpenClaw hooks directory
-cp -r hooks/openclaw ~/.openclaw/hooks/self-improvement
-
-# Enable it
-openclaw hooks enable self-improvement
-```
-
-See `references/openclaw-integration.md` for complete details.
+| Broadly applicable learning | Promote to `AGENTS.md` or project team specs |
 
 ---
 
-## Generic Setup (Other Agents)
+## Setup
 
-For Claude Code, Codex, Copilot, or other agents, create `.learnings/` in the project or workspace root:
+Create `.learnings/` in the **project root**:
 
 ```bash
 mkdir -p .learnings
 ```
 
-Create the files inline using the headers shown above. Avoid reading templates from the current repo or workspace unless you explicitly trust that path.
+Create the files inline using the headers shown above. Avoid reading templates from untrusted paths.
 
-### Add reference to agent files AGENTS.md, CLAUDE.md, or .github/copilot-instructions.md to remind yourself to log learnings. (this is an alternative to hook-based reminders)
+### Add Reference to AGENTS.md
 
-#### Self-Improvement Workflow
+Add a reminder to the project's `AGENTS.md` (or `.agents/skills/` 下的相关规范) so all agents know to log learnings:
+
+```markdown
+## Self-Improvement
 
 When errors or corrections occur:
 1. Log to `.learnings/ERRORS.md`, `LEARNINGS.md`, or `FEATURE_REQUESTS.md`
-2. Review and promote broadly applicable learnings to:
-   - `CLAUDE.md` - project facts and conventions
-   - `AGENTS.md` - workflows and automation
-   - `.github/copilot-instructions.md` - Copilot context
+2. Review and promote broadly applicable learnings to `AGENTS.md` or team specs
+```
+
+---
 
 ## Logging Format
 
@@ -159,7 +77,7 @@ Append to `.learnings/LEARNINGS.md`:
 **Logged**: ISO-8601 timestamp
 **Priority**: low | medium | high | critical
 **Status**: pending
-**Area**: frontend | backend | infra | tests | docs | config
+**Area**: frontend | backend | algo | infra | tests | docs | config
 
 ### Summary
 One-line description of what was learned
@@ -193,7 +111,7 @@ Append to `.learnings/ERRORS.md`:
 **Logged**: ISO-8601 timestamp
 **Priority**: high
 **Status**: pending
-**Area**: frontend | backend | infra | tests | docs | config
+**Area**: frontend | backend | algo | infra | tests | docs | config
 
 ### Summary
 Brief description of what failed
@@ -230,7 +148,7 @@ Append to `.learnings/FEATURE_REQUESTS.md`:
 **Logged**: ISO-8601 timestamp
 **Priority**: medium
 **Status**: pending
-**Area**: frontend | backend | infra | tests | docs | config
+**Area**: frontend | backend | algo | infra | tests | docs | config
 
 ### Requested Capability
 What the user wanted to do
@@ -251,6 +169,8 @@ How this could be built, what it might extend
 ---
 ```
 
+---
+
 ## ID Generation
 
 Format: `TYPE-YYYYMMDD-XXX`
@@ -259,6 +179,8 @@ Format: `TYPE-YYYYMMDD-XXX`
 - XXX: Sequential number or random 3 chars (e.g., `001`, `A7B`)
 
 Examples: `LRN-20250115-001`, `ERR-20250115-A3F`, `FEAT-20250115-002`
+
+---
 
 ## Resolving Entries
 
@@ -277,7 +199,9 @@ When an issue is fixed, update the entry:
 Other status values:
 - `in_progress` - Actively being worked on
 - `wont_fix` - Decided not to address (add reason in Resolution notes)
-- `promoted` - Elevated to CLAUDE.md, AGENTS.md, or .github/copilot-instructions.md
+- `promoted` - Elevated to AGENTS.md or team specs
+
+---
 
 ## Promoting to Project Memory
 
@@ -294,11 +218,9 @@ When a learning is broadly applicable (not a one-off fix), promote it to permane
 
 | Target | What Belongs There |
 |--------|-------------------|
-| `CLAUDE.md` | Project facts, conventions, gotchas for all Claude interactions |
-| `AGENTS.md` | Agent-specific workflows, tool usage patterns, automation rules |
-| `.github/copilot-instructions.md` | Project context and conventions for GitHub Copilot |
-| `SOUL.md` | Behavioral guidelines, communication style, principles (OpenClaw workspace) |
-| `TOOLS.md` | Tool capabilities, usage patterns, integration gotchas (OpenClaw workspace) |
+| `AGENTS.md` | Agent workflows, tool usage patterns, automation rules, coding conventions |
+| `document/team/specs/` | Team-wide development standards, review rules, architecture conventions |
+| `.github/copilot-instructions.md` | Project context for GitHub Copilot (if using Copilot) |
 
 ### How to Promote
 
@@ -306,15 +228,15 @@ When a learning is broadly applicable (not a one-off fix), promote it to permane
 2. **Add** to appropriate section in target file (create file if needed)
 3. **Update** original entry:
    - Change `**Status**: pending` → `**Status**: promoted`
-   - Add `**Promoted**: CLAUDE.md`, `AGENTS.md`, or `.github/copilot-instructions.md`
+   - Add `**Promoted**: AGENTS.md` or `document/team/specs/xxx.md`
 
 ### Promotion Examples
 
 **Learning** (verbose):
-> Project uses pnpm workspaces. Attempted `npm install` but failed. 
+> Project uses pnpm workspaces. Attempted `npm install` but failed.
 > Lock file is `pnpm-lock.yaml`. Must use `pnpm install`.
 
-**In CLAUDE.md** (concise):
+**In AGENTS.md** (concise):
 ```markdown
 ## Build & Dependencies
 - Package manager: pnpm (not npm) - use `pnpm install`
@@ -331,6 +253,8 @@ When a learning is broadly applicable (not a one-off fix), promote it to permane
 2. Check for type errors: `pnpm tsc --noEmit`
 ```
 
+---
+
 ## Recurring Pattern Detection
 
 If logging something similar to an existing entry:
@@ -339,46 +263,25 @@ If logging something similar to an existing entry:
 2. **Link entries**: Add `**See Also**: ERR-20250110-001` in Metadata
 3. **Bump priority** if issue keeps recurring
 4. **Consider systemic fix**: Recurring issues often indicate:
-   - Missing documentation (→ promote to CLAUDE.md or .github/copilot-instructions.md)
+   - Missing documentation (→ promote to AGENTS.md or team specs)
    - Missing automation (→ add to AGENTS.md)
-   - Architectural problem (→ create tech debt ticket)
+   - Architectural problem (→ create tech debt ticket in `document/tech-debt/`)
 
-## Simplify & Harden Feed
+### Promotion Rule
 
-Use this workflow to ingest recurring patterns from the `simplify-and-harden`
-skill and turn them into durable prompt guidance.
-
-### Ingestion Workflow
-
-1. Read `simplify_and_harden.learning_loop.candidates` from the task summary.
-2. For each candidate, use `pattern_key` as the stable dedupe key.
-3. Search `.learnings/LEARNINGS.md` for an existing entry with that key:
-   - `grep -n "Pattern-Key: <pattern_key>" .learnings/LEARNINGS.md`
-4. If found:
-   - Increment `Recurrence-Count`
-   - Update `Last-Seen`
-   - Add `See Also` links to related entries/tasks
-5. If not found:
-   - Create a new `LRN-...` entry
-   - Set `Source: simplify-and-harden`
-   - Set `Pattern-Key`, `Recurrence-Count: 1`, and `First-Seen`/`Last-Seen`
-
-### Promotion Rule (System Prompt Feedback)
-
-Promote recurring patterns into agent context/system prompt files when all are true:
+Promote recurring patterns into agent context when all are true:
 
 - `Recurrence-Count >= 3`
 - Seen across at least 2 distinct tasks
 - Occurred within a 30-day window
 
 Promotion targets:
-- `CLAUDE.md`
 - `AGENTS.md`
-- `.github/copilot-instructions.md`
-- `SOUL.md` / `TOOLS.md` for OpenClaw workspace-level guidance when applicable
+- `document/team/specs/review-rule.md` or relevant team specs
 
-Write promoted rules as short prevention rules (what to do before/while coding),
-not long incident write-ups.
+Write promoted rules as short prevention rules (what to do before/while coding), not long incident write-ups.
+
+---
 
 ## Periodic Review
 
@@ -408,6 +311,8 @@ grep -l "Area\*\*: backend" .learnings/*.md
 - Link related entries
 - Escalate recurring issues
 
+---
+
 ## Detection Triggers
 
 Automatically log when you notice:
@@ -435,6 +340,8 @@ Automatically log when you notice:
 - Unexpected output or behavior
 - Timeout or connection failure
 
+---
+
 ## Priority Guidelines
 
 | Priority | When to Use |
@@ -444,6 +351,8 @@ Automatically log when you notice:
 | `medium` | Moderate impact, workaround exists |
 | `low` | Minor inconvenience, edge case, nice-to-have |
 
+---
+
 ## Area Tags
 
 Use to filter learnings by codebase region:
@@ -452,10 +361,13 @@ Use to filter learnings by codebase region:
 |------|-------|
 | `frontend` | UI, components, client-side code |
 | `backend` | API, services, server-side code |
+| `algo` | Python algorithm services, model logic |
 | `infra` | CI/CD, deployment, Docker, cloud |
 | `tests` | Test files, testing utilities, coverage |
 | `docs` | Documentation, comments, READMEs |
 | `config` | Configuration files, environment, settings |
+
+---
 
 ## Best Practices
 
@@ -465,8 +377,10 @@ Use to filter learnings by codebase region:
 4. **Link related files** - makes fixes easier
 5. **Suggest concrete fixes** - not just "investigate"
 6. **Use consistent categories** - enables filtering
-7. **Promote aggressively** - if in doubt, add to CLAUDE.md or .github/copilot-instructions.md
+7. **Promote aggressively** - if in doubt, add to AGENTS.md or team specs
 8. **Review regularly** - stale learnings lose value
+
+---
 
 ## Gitignore Options
 
@@ -475,7 +389,7 @@ Use to filter learnings by codebase region:
 .learnings/
 ```
 
-This repo uses that default to avoid committing sensitive or noisy local logs by accident.
+This is the default to avoid committing sensitive or noisy local logs by accident.
 
 **Track learnings in repo** (team-wide):
 Don't add to .gitignore - learnings become shared knowledge.
@@ -486,118 +400,36 @@ Don't add to .gitignore - learnings become shared knowledge.
 !.learnings/.gitkeep
 ```
 
-## Hook Integration
+---
 
-Enable automatic reminders through agent hooks. This is **opt-in** - you must explicitly configure hooks.
+## AGENTS.md Integration
 
-### Quick Setup (Claude Code / Codex)
+Since Kimi Code CLI does not support hooks, rely on `AGENTS.md` to remind agents to log learnings.
 
-Create `.claude/settings.json` in your project:
+Add this section to the project's `AGENTS.md`:
 
-```json
-{
-  "hooks": {
-    "UserPromptSubmit": [{
-      "matcher": "",
-      "hooks": [{
-        "type": "command",
-        "command": "~/.openclaw/skills/self-improvement/scripts/activator.sh"
-      }]
-    }]
-  }
-}
+```markdown
+## Self-Improvement Reminder
+
+When any of the following occur, log to `.learnings/`:
+- Command fails or returns unexpected output → `.learnings/ERRORS.md`
+- User corrects your understanding → `.learnings/LEARNINGS.md` (category: correction)
+- You discover a better approach or pattern → `.learnings/LEARNINGS.md` (category: best_practice)
+- User requests a missing capability → `.learnings/FEATURE_REQUESTS.md`
+
+Before starting major tasks, briefly review `.learnings/` for relevant past errors.
 ```
 
-This injects a learning evaluation reminder after each prompt (~50-100 tokens overhead).
+---
 
-### Advanced Setup (With Error Detection)
+## Manual Skill Extraction
 
-```json
-{
-  "hooks": {
-    "UserPromptSubmit": [{
-      "matcher": "",
-      "hooks": [{
-        "type": "command",
-        "command": "~/.openclaw/skills/self-improvement/scripts/activator.sh"
-      }]
-    }],
-    "PostToolUse": [{
-      "matcher": "Bash",
-      "hooks": [{
-        "type": "command",
-        "command": "~/.openclaw/skills/self-improvement/scripts/error-detector.sh"
-      }]
-    }]
-  }
-}
-```
+When a learning is valuable enough to become a reusable skill:
 
-This is optional. The recommended default is activator-only setup; enable `PostToolUse` only if you are comfortable with hook scripts inspecting command output for error patterns.
-
-### Available Hook Scripts
-
-| Script | Hook Type | Purpose |
-|--------|-----------|---------|
-| `scripts/activator.sh` | UserPromptSubmit | Reminds to evaluate learnings after tasks |
-| `scripts/error-detector.sh` | PostToolUse (Bash) | Triggers on command errors |
-
-See `references/hooks-setup.md` for detailed configuration and troubleshooting.
-
-## Automatic Skill Extraction
-
-When a learning is valuable enough to become a reusable skill, extract it using the provided helper.
-
-### Skill Extraction Criteria
-
-A learning qualifies for skill extraction when ANY of these apply:
-
-| Criterion | Description |
-|-----------|-------------|
-| **Recurring** | Has `See Also` links to 2+ similar issues |
-| **Verified** | Status is `resolved` with working fix |
-| **Non-obvious** | Required actual debugging/investigation to discover |
-| **Broadly applicable** | Not project-specific; useful across codebases |
-| **User-flagged** | User says "save this as a skill" or similar |
-
-### Extraction Workflow
-
-1. **Identify candidate**: Learning meets extraction criteria
-2. **Run helper** (or create manually):
-   ```bash
-   ~/.openclaw/skills/self-improvement/scripts/extract-skill.sh skill-name --dry-run
-   ~/.openclaw/skills/self-improvement/scripts/extract-skill.sh skill-name
-   ```
-3. **Customize SKILL.md**: Fill in template with learning content
+1. **Identify candidate**: Learning is verified, non-obvious, and broadly applicable
+2. **Create skill**: Follow the `skill-creator` skill guidelines (see system skills)
+3. **Create `SKILL.md`**: Use YAML frontmatter with `name` and `description`
 4. **Update learning**: Set status to `promoted_to_skill`, add `Skill-Path`
-5. **Verify**: Read skill in fresh session to ensure it's self-contained
-
-### Manual Extraction
-
-If you prefer manual creation:
-
-1. Create `skills/<skill-name>/SKILL.md`
-2. Use template from `assets/SKILL-TEMPLATE.md`
-3. Follow [Agent Skills spec](https://agentskills.io/specification):
-   - YAML frontmatter with `name` and `description`
-   - Name must match folder name
-   - No README.md inside skill folder
-
-### Extraction Detection Triggers
-
-Watch for these signals that a learning should become a skill:
-
-**In conversation:**
-- "Save this as a skill"
-- "I keep running into this"
-- "This would be useful for other projects"
-- "Remember this pattern"
-
-**In learning entries:**
-- Multiple `See Also` links (recurring issue)
-- High priority + resolved status
-- Category: `best_practice` with broad applicability
-- User feedback praising the solution
 
 ### Skill Quality Gates
 
@@ -609,25 +441,21 @@ Before extraction, verify:
 - [ ] No project-specific hardcoded values
 - [ ] Follows skill naming conventions (lowercase, hyphens)
 
+---
+
 ## Multi-Agent Support
 
-This skill works across different AI coding agents with agent-specific activation.
+This skill works across different AI coding agents.
 
-### Claude Code
+### Kimi Code CLI
 
-**Activation**: Hooks (UserPromptSubmit, PostToolUse)
-**Setup**: `.claude/settings.json` with hook configuration
-**Detection**: Automatic via hook scripts
-
-### Codex CLI
-
-**Activation**: Hooks (same pattern as Claude Code)
-**Setup**: `.codex/settings.json` with hook configuration
-**Detection**: Automatic via hook scripts
+**Activation**: Manual (no hook support). Rely on `AGENTS.md` reminder.
+**Setup**: Create `.learnings/` in project root, add reminder to `AGENTS.md`.
+**Detection**: Automatic by agent following AGENTS.md instructions.
 
 ### GitHub Copilot
 
-**Activation**: Manual (no hook support)
+**Activation**: Manual (no hook support).
 **Setup**: Add to `.github/copilot-instructions.md`:
 
 ```markdown
@@ -636,18 +464,10 @@ This skill works across different AI coding agents with agent-specific activatio
 After solving non-obvious issues, consider logging to `.learnings/`:
 1. Use format from self-improvement skill
 2. Link related entries with See Also
-3. Promote high-value learnings to skills
-
-Ask in chat: "Should I log this as a learning?"
+3. Promote high-value learnings to AGENTS.md
 ```
 
-**Detection**: Manual review at session end
-
-### OpenClaw
-
-**Activation**: Workspace injection + inter-agent messaging
-**Setup**: See "OpenClaw Setup" section above
-**Detection**: Via session tools and workspace files
+**Detection**: Manual review at session end.
 
 ### Agent-Agnostic Guidance
 
@@ -658,14 +478,3 @@ Regardless of agent, apply self-improvement when you:
 3. **Learn project conventions** - discovered undocumented patterns
 4. **Hit unexpected errors** - especially if diagnosis was difficult
 5. **Find better approaches** - improved on your original solution
-
-### Copilot Chat Integration
-
-For Copilot users, add this to your prompts when relevant:
-
-> After completing this task, evaluate if any learnings should be logged to `.learnings/` using the self-improvement skill format.
-
-Or use quick prompts:
-- "Log this to learnings"
-- "Create a skill from this solution"
-- "Check .learnings/ for related issues"

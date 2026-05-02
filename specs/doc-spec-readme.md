@@ -489,7 +489,7 @@ curl http://localhost/health
 
 - ❌ **所有代码不允许落在云存储**
 - ❌ **禁止**: 飞书云盘、知识库、在线文档等
-- ✅ **只能**: 本地存储 (`~/.openclaw/workspace/`)
+- ✅ **只能**: 本地存储 (`{PROJECT_ROOT}/`)
 ```
 
 ---

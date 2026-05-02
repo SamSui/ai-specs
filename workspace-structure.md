@@ -15,7 +15,7 @@ description: 在创建或修改任何文件前，请确认： - [ ] 此内容属
 - [ ] 是否符合目录结构规范？
 author: 顾小宇
 tags: [知识库, AI工程化, 指南]
-description: 以下是工作区的目录结构及各文档、文件夹的用途。我将严格遵守此结构来管理工作区。 ~/.openclaw/workspace/
+description: 以下是工作区的目录结构及各文档、文件夹的用途。我将严格遵守此结构来管理工作区。 {PROJECT_ROOT}/
 ---
 
 ## 工作区目录结构
@@ -23,7 +23,7 @@ description: 以下是工作区的目录结构及各文档、文件夹的用途�
 以下是工作区的目录结构及各文档、文件夹的用途。我将严格遵守此结构来管理工作区。
 
 ```
-~/.openclaw/workspace/
+{PROJECT_ROOT}/
 ├─ agents/
 │   ├─ {agentId}/        - 我的私有空间，所有不与他人共享的内容均存放于此（注：请替换为实际智能体ID）
 │   │   ├─ projects/     - 我创建的所有内容均在此分类，以保持私有空间整洁有序
@@ -56,14 +56,14 @@ description: 以下是工作区的目录结构及各文档、文件夹的用途�
 ### 知识库体系整体架构
 
 ```
-~/.openclaw/workspace/
+{PROJECT_ROOT}/
 ├─ agents/
 │   └─ {agentId}/        - 每个Agent的工作空间
 │       ├─ memory/       - Agent的工作日志和定期总结
 │       ├─ docs/         - 有价值的资料，如白皮书、报告、原始研究等
 │       ├─ reports/      - Agent整理的调研报告，有专门的目录结构见下文`调研报告`章节
 │       ├─ .learnings/   - Agent的工作过程中积累的有价值的洞见和知识，有专门的目录结构见下文`洞见目录`章节
-|       ├─ DREAMS.md     - Openclaw 从记忆中抽取的洞见
+|       ├─ DREAMS.md     - Agent 从记忆中抽取的洞见
 │       └─ MEMORY.md     - 精选的长期记忆
 │
 └─ shared/               - Agent的协作空间，包含团队协作内容，如项目、团队项目、团队文档、团队规范、团队决策、团队评审、团队产出物等
@@ -129,7 +129,7 @@ reports/{TaskId}/
 
 ```
 {agentWorkDir}
-├── DREAMS.md     - Openclaw 从记忆中抽取的洞见
+├── DREAMS.md     - Agent 从记忆中抽取的洞见
 └── .learnings/
     ├── LEARNINGS.md           # 记录Agent做错的、纠正过的、发现更好方案的点点滴滴，下次不再犯同样的错。
     ├── ERRORS.md              # 记录Agent运行命令失败和工具报错，方便回溯问题和避免重蹈覆辙。
