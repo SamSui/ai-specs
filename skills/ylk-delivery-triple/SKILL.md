@@ -75,10 +75,13 @@ git log -1 --oneline
 ## 使用 glab 触发与跟踪
 
 - 多 GitLab host 环境必须显式指定 `GITLAB_HOST`；不要依赖当前目录或 `glab` 默认 host 推断。
-- 获取 pipeline、job、变量和状态时使用 `glab` 的目标 host 与目标项目；API 调用不得使用 `glab api | python` 管道。需要 API 解析时，使用受控临时 JSON 文件后解析，完成立即删除。
-- 先确认 push 对应 commit 已被目标 GitLab 项目接收，再创建或定位该 ref 的 pipeline；不能对错误分支、旧 commit 或不明确项目触发。
-- 手动 job 必须按映射顺序触发：先构建，构建成功并产物可用后再触发 deploy。不得为“完整性”触发不属于交付映射的 Docker、全量构建、测试或部署 job。
-- 持续跟踪 pipeline 和 job 状态。失败时报告 job URL/ID、脱敏日志摘要、失败阶段、是否影响已交付服务；不得把 allow_failure、manual 或已创建 pipeline 当作成功。
+- **首次使用本机 `glab` 子命令或参数前，必须执行 `<command> --help` 确认该安装版本实际支持的 flags、参数名和交互限制。** 不得根据其他 `glab` 版本、记忆或示例假设 `--pipeline-id`、`--jq`、已有 pipeline 的 job play 或非交互 view 可用。
+- 获取 pipeline、job、变量和状态时使用目标 host 与目标项目。API 调用不得使用 `glab api | python` 管道，也不得假设 `glab api` 支持 `--jq`；需要解析 JSON 时写入受控临时 JSON 文件，再以本机可用解析器读取，完成立即删除。
+- push 后先按 ref 和 commit SHA 定位已有自动创建的 pipeline；若该 pipeline 对应本次 commit，优先复用，不重复创建 pipeline。只有没有匹配 pipeline，且 `glab ci run --help` 已确认创建参数后，才创建分支 pipeline。
+- 先读取该 pipeline 的 job 清单，逐项核对 job ID、名称、状态、`when`、`needs` 和映射。手动 job 的启动方式取决于本机 CLI 能力：若 `glab` 明确支持对既有 pipeline play job，则使用该命令；否则调用 GitLab job play API，且只对已核对的精确 job ID 发起 `POST`。不得把创建 pipeline 的命令误用于启动已有 pipeline 的手动 job。
+- 手动 job 必须按映射顺序触发：先构建，构建成功且产物可用后再触发 deploy。不得为“完整性”触发不属于交付映射的 Docker、全量构建、测试或部署 job。
+- **调度与等待必须是单次、可观察快照。** 每次只查询一次 pipeline/job 状态并报告状态、job ID 和 URL；需要再次检查时在新的显式步骤中再查询。禁止后台无限循环、长时间 `sleep` 轮询、workflow agent、隐式重试或将等待任务交给无人监管的后台进程。用户指出构建已经完成时，先做一次状态快照并立即进入下一步，不得重新等待。
+- 失败时报告 job URL/ID、脱敏日志摘要、失败阶段、是否影响已交付服务；不得把 allow_failure、manual、waiting_for_resource、已创建 pipeline 或已发起 play 请求当作成功。
 
 ## 部署后回归
 
