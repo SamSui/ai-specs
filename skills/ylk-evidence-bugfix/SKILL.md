@@ -19,6 +19,9 @@ description: |
 - **Maven 构建、前端 lint/build、单测、CI/CD、发布和部署回归** → 读 [quality-and-delivery.md](references/quality-and-delivery.md)，以当前仓 `.gitlab-ci.yml` 和 includes 判断交付模型；默认跳过 Docker 镜像构建，只有 CI 明确要求镜像产物的目标服务才执行。Maven 命令还必须遵守本文件的“构建发现与执行规则”。
 - **文档来源、历史 memory、Beads 经验或事实冲突** → 读 [sources-and-freshness.md](references/sources-and-freshness.md)，按“当前代码/当前环境优先，历史资料辅助”的规则处理。
 - **本机浏览器调试端口** → 读私有 `custom.md`。它只保存本机 Playwright/CDP 配置，不提供 YLK 环境或业务拓扑事实。
+- **后端日志分析→编码→部署→验证的自动化闭环调试** → 引用 `k8s-pod-crash-cicd-debug` Skill。当本 Bugfix 流程需要"看日志定位根因 → 编码修复 → Commit+Push → 触发 CI → 回到目标 pod 验证 API 200"的完整闭环时，优先按该 Skill 执行；它覆盖 GitLab CI manual pipeline（B00:clean / B0x:service / DD0x:service 形态）+ SSH MCP + kubectl 的组合场景，能补全本 Skill 在 K8s/CICD 层的验证闭环专项能力。
+
+  **Context 传递规则：**`ylk-evidence-bugfix` 入口阶段已持有 SSH-MCP 连接名、目标 deployment/service、namespace、远端 GitLab host、本地当前分支等上下文，委托调用 `k8s-pod-crash-cicd-debug` 时直接注入，不要重复 AskUserQuestion。仅当该 Skill 明确需要用户提供且本流程无法从既有证据推定时才提问——例如：SSH-MCP 连接名未明确、同一服务在多环境组均有同名 deployment 需要选择、分支状态与部署目标不一致需确认是否切分支。**能自动推断的就不问，以自动化推进为优先。**
 
 **引用边界：**`SKILL.md` 是执行规则的 source of truth；references 是按场景加载的操作资料；`custom.md` 是本机私有 overlay；memory、Beads 和历史文档只能提出假设，不能替代当前代码或环境验证。外部规范只可用于增强证据、授权、停止、委派和验收约束，不得引入与 YLK Bug 修复无关的 Skill 自检、通用 Agent 管理或产品决策能力。不要因为文件名相近而跳过索引或读取不适用的 reference。
 
