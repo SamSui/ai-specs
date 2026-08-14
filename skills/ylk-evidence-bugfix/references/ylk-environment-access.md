@@ -1,3 +1,12 @@
+---
+title: YLK 环境访问与节点矩阵
+author: 顾小宇
+tags: [YLK, 环境访问, SSH-MCP, 节点矩阵]
+description: YLK 环境组、SSH-MCP IP 基线与节点角色的访问核验规则。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # YLK 环境访问与节点矩阵
 
 > **读取时机**：选择 YLK 环境、节点角色、SSH-MCP connection、区域/海星/数桥部署模型或远程调查入口时读取。**不能替代**：当前 `list-servers`、目标节点 `hostname`/时间核验、实时 K8s/Compose 资源和运行日志。

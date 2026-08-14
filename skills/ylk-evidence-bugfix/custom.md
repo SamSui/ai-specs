@@ -1,3 +1,12 @@
+---
+title: 本机 Playwright 调试配置
+author: 顾小宇
+tags: [Playwright, CDP, 本机配置, 调试]
+description: 本机私有 Playwright/CDP 调试端口与私有文件规则。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # 本机 Playwright 调试配置
 
 本文件是 `ylk-evidence-bugfix` 的本机私有 overlay，只记录当前机器的 Playwright/CDP 调试端口。需要浏览器调试或本机 MCP 端口时读取；环境组、SSH-MCP IP、节点角色、部署拓扑和通用调查规则见 [YLK 环境访问与节点矩阵](references/ylk-environment-access.md)。本文件不能替代实时浏览器进程检查。

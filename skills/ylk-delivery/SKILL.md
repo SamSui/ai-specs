@@ -1,8 +1,11 @@
 ---
-name: ylk-delivery-triple
+name: ylk-delivery
 description: |
   面向 YLK workspace 任意子项目的授权后交付流程：核验工作树和远端、按仓原子 commit、推送、依据目标仓当前 GitLab CI 建立服务到交付物的映射，并通过 glab 触发和跟踪构建与部署。
   触发词：commit push CI/CD 三连、提交推送发布、触发 GitLab 流水线、构建部署、交付上线。
+author: 顾小宇
+version: v1.0
+last_updated: 2026-08-14
 ---
 
 # YLK Delivery Triple

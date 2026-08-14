@@ -1,6 +1,7 @@
 ---
 name: milestone-spec-workflow
 description: 里程碑规范整理与核查对齐工作流，核查代码实现与需求文档的偏离和差异，规划下一版本的里程碑任务计划。触发词：闭环分析 里程碑分析。
+author: 顾小宇
 version: v3.0
 last_updated: 2026-04-30
 ---

@@ -1,3 +1,12 @@
+---
+title: YLK 架构与部署背景
+author: 顾小宇
+tags: [YLK, 架构, 部署, 仓库拓扑]
+description: YLK 节点角色、仓库职责、部署模型与六条业务主链的架构导航。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # YLK 架构与部署背景
 
 > 来源与时效性：见 [来源与时效性](sources-and-freshness.md)。**读取时机**：需要识别 YLK 节点角色、仓库职责、业务主链、网关模型或部署语义时读取。本文件是架构导航，不是当前环境的权威清单；当前环境组、SSH-MCP IP 和节点选择见 [YLK 环境访问与节点矩阵](ylk-environment-access.md)，当前服务端口和 workload 映射见 [YLK 服务端口与部署拓扑](ylk-service-topology.md)。

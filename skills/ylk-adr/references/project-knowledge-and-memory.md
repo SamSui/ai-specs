@@ -1,3 +1,12 @@
+---
+title: 项目认知、经验与 Beads memory
+author: 顾小宇
+tags: [Beads, memory, 项目认知, 经验沉淀]
+description: 项目认知、经验与踩坑在 Beads issue、Beads memory、ADR 与结果报告之间的承载和写入规则。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # 项目认知、经验与 Beads memory
 
 ## 目的

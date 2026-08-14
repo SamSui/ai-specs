@@ -3,6 +3,7 @@ name: semantic-merge
 type: Skill
 tags: [git, merge, conflict-resolution, code-review, CI/CD]
 description: 跨项目的语义合并方法论——通过意图理解替代文本匹配合并代码冲突，适用于任何编程语言和项目结构。
+author: 顾小宇
 version: 1.0
 last_updated: 2026-06-06
 status: draft

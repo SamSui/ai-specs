@@ -1,15 +1,9 @@
 ---
-name: ylk-adr-workflow
-description: 面向 YLK workspace 的跨仓架构决策、需求纠偏、项目认知沉淀、验证和交付归档工作流；用 Beads issue 跟踪进展，用 bd remember 保存经验、认知和踩坑，维护 docs/adr-* 稳定文档。
-triggers:
-  - 新建或整理 YLK ADR
-  - 跨仓需求纠偏
-  - ADR 偏离分析
-  - 需求与代码对齐
-  - 跨仓架构方案
-  - ADR 验证和收官
-  - 更新 YLK 架构文档
-  - 整理项目认知、经验和踩坑
+name: ylk-adr
+description: 面向 YLK workspace 的跨仓架构决策、需求纠偏、项目认知沉淀、验证和交付归档工作流；用 Beads issue 跟踪进展，用 bd remember 保存经验、认知和踩坑，维护 docs/adr-* 稳定文档。触发场景：新建或整理 YLK ADR；跨仓需求纠偏；ADR 偏离分析；需求与代码对齐；跨仓架构方案；ADR 验证和收官；更新 YLK 架构文档；整理项目认知、经验和踩坑。
+author: 顾小宇
+version: v1.0
+last_updated: 2026-08-14
 ---
 
 # YLK ADR Workflow

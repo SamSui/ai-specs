@@ -1,3 +1,12 @@
+---
+title: Bug 调查与证据链
+author: 顾小宇
+tags: [Bug调查, 证据链, 调用链, 取证]
+description: Bug 规格模板与静态链路、API、日志、数据库、对象存储的证据取证规则。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # Bug 调查与证据链
 
 > 来源与时效性：见 [来源与时效性](sources-and-freshness.md)。接口、数据库、日志与部署结论必须在目标环境重新验证，不能由本文件或历史样例推断。

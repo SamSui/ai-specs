@@ -1,3 +1,12 @@
+---
+title: YLK 服务端口与部署拓扑
+author: 顾小宇
+tags: [YLK, 服务拓扑, 端口, K8s, Docker]
+description: YLK 服务端口、NodePort、Deployment/StatefulSet 与 Compose 项目拓扑的查询导航。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # YLK 服务端口与部署拓扑
 
 > **读取时机**：调查服务端口、NodePort、Compose project、`Deployment`、`StatefulSet`、Service、容器或前端入口时读取。**不能替代**：目标节点当前的 `kubectl get`、`docker compose ls`、Compose 文件、selector、Service 配置和 rollout 状态。

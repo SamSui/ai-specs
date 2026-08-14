@@ -1,3 +1,12 @@
+---
+title: 新机器初始化清单
+author: 顾小宇
+tags: [新机器, 初始化, 工具链, SSH-MCP]
+description: 新机器或 Skill 迁移时的安装自检、workspace 获取与访问核验初始化清单。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # 新机器初始化清单
 
 > 来源与时效性：见 [来源与时效性](sources-and-freshness.md)。**读取时机**：新机器、Skill 迁移、SSH-MCP/工具链变化或连接映射缺失时读取。本文件只定义初始化过程；当前机器的 Playwright/CDP 配置写入同级 `../custom.md`，通用 SSH-MCP IP 和环境矩阵见 [YLK 环境访问与节点矩阵](ylk-environment-access.md)。**不能替代**：当前 SSH-MCP `list-servers`、目标节点只读探测和 Owner 对环境决策的明确回答。

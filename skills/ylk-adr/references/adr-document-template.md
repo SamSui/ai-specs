@@ -1,3 +1,12 @@
+---
+title: ADR 正文模板
+author: 顾小宇
+tags: [ADR, 模板, 架构决策, 文档规范]
+description: ADR 正文的创建判断、推荐结构与写作要求模板。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # ADR 正文模板
 
 ## 创建判断

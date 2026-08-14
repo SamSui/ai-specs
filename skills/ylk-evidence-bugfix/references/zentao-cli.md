@@ -1,3 +1,12 @@
+---
+title: 可选：从禅道 Bug 单获取输入
+author: 顾小宇
+tags: [禅道, Bug单, zentao-cli, 输入来源]
+description: 通过 zentao-cli 只读获取禅道 Bug 单并转成调查输入的可选流程与字段映射。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # 可选：从禅道 Bug 单获取输入
 
 > **读取时机**：用户提供禅道 Bug ID、禅道 Bug 链接，或明确要求从禅道读取 Bug 单时读取。本文件只定义“读取 Bug 单并转成调查输入”的可选入口，不能替代当前仓源码、CI、API、日志、数据库或部署环境证据。

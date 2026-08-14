@@ -1,3 +1,12 @@
+---
+title: 最终结果与交接报告模板
+author: 顾小宇
+tags: [结果报告, 交接, 模板, 交付归档]
+description: 跨仓 ADR 实施或修复收官时 result.md/HANDOVER.md 的结构与写作规则。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # 最终结果与交接报告模板
 
 ## 适用场景

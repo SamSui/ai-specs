@@ -1,3 +1,12 @@
+---
+title: E2E 与验证证据规则
+author: 顾小宇
+tags: [E2E, 验证, 证据规则, 测试]
+description: E2E 与验证证据的层级划分、基本原则、失败证据与结果表达规则。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # E2E 与验证证据规则
 
 ## 验证层级

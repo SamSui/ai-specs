@@ -1,6 +1,7 @@
 ---
 name: interview
 description: "决策采访技能。当需要 Owner 决策时，将问题整理成结构化选项卡片，通过 AskUserQuestion 向用户发起交互。支持两种模式：① 单题提问（逐个等待）② 多 TAB 提问（一次展示多个 TAB，用户顺序切换）。触发词：逐项采访 / 采访 / 决策选项 / 选择决策 / 分步确认。"
+author: 顾小宇
 version: v5.0
 last_updated: 2026-05-01
 ---

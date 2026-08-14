@@ -1,3 +1,12 @@
+---
+title: ADR 目录约定
+author: 顾小宇
+tags: [ADR, 目录约定, 架构决策, 文档规范]
+description: YLK workspace 的 ADR 主题目录、编号索引、文件分工与日期状态约定。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # ADR 目录约定
 
 ## 适用范围

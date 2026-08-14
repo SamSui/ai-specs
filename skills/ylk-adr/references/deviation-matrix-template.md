@@ -1,3 +1,12 @@
+---
+title: 偏离与 FIX 映射模板
+author: 顾小宇
+tags: [ADR, 偏离矩阵, FIX映射, 模板]
+description: 偏离与 FIX 映射的记录格式、状态定义与映射原则模板。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # 偏离与 FIX 映射模板
 
 ## 目的

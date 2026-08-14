@@ -1,3 +1,12 @@
+---
+title: 质量、交付与部署门禁
+author: 顾小宇
+tags: [质量门禁, 交付, 部署, CI/CD]
+description: 测试、构建、Git、CI/CD 与部署的验证矩阵、失败归因和交付门禁规则。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # 质量、交付与部署门禁
 
 > 来源与时效性：见 [来源与时效性](sources-and-freshness.md)。**读取时机**：开始测试、编译、lint、build、CI、commit、push、部署或回归前读取。构建命令以当前仓 GitLab CI 为第一来源，README 为第二来源；不要照搬其他仓或历史命令。**不能替代**：当前 pipeline、仓库工作树、目标环境 rollout 和授权状态。

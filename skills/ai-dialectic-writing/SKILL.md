@@ -1,6 +1,7 @@
 ---
 name: ai-dialectic-writing
 description: "AI 辩证法撰写技术文档。五步迭代法 + Kimi Agent 双 Subagent 调度，产出专业级文档。触发词：辩证法撰写 / 写报告 / AI撰写 / 迭代法写 / 深度调研。适用场景：技术方案、研究报告、深度调研、竞品分析。"
+author: 顾小宇
 version: v3.0
 last_updated: 2026-04-30
 ---

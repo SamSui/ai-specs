@@ -1,3 +1,12 @@
+---
+title: 需求基线模板
+author: 顾小宇
+tags: [需求基线, 模板, Beads, 任务拆分]
+description: 需求基线、Beads 父子 issue 拆分与调查清单模板。
+version: v1.0
+last_updated: 2026-08-14
+---
+
 # 需求基线模板
 
 `CURRENT_TASKS.md` 的历史价值不只在进度，还在于把需求、代码落点、项目认知和测试用例放在同一基线中。新任务不再用它做进度看板；基线变化进入 Beads issue，稳定业务认知进入 ADR 或 Beads memory，经验和踩坑也必须保留并迁移。
