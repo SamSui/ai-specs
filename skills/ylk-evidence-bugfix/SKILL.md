@@ -16,15 +16,20 @@ last_updated: 2026-08-14
 
 - **新机器、连接、权限或工具链初始化** → 先读 [new-machine-bootstrap.md](references/new-machine-bootstrap.md)，再读 [ylk-environment-access.md](references/ylk-environment-access.md)。需要 Owner 选择环境、补充连接或决定配置时，调用 `interview` Skill 的 `AskUserQuestion`。
 - **Bug 单、调用链、API、日志、数据库、对象存储调查** → 读 [investigation-evidence.md](references/investigation-evidence.md)。它定义证据顺序、脱敏 curl、查询边界、文件链路和根因结论格式。
-- **用户提供禅道 Bug ID/链接，或要求从禅道获取 Bug 输入** → 可选读取 [zentao-cli.md](references/zentao-cli.md)。仅使用只读 `zentao-cli bug list/get` 或 GET REST API；它不能替代当前代码和运行环境证据。
+- **用户提供禅道 Bug ID/链接，或要求从禅道获取 Bug 输入** → 先委托 `ylk-zentao-bug-analysis` Skill 做只读链路分析（平台→界面→路由→组件→API→代码行号），再生成本 Bugfix 规格；不自行内联执行禅道链路追踪。若仅需 Bug 基本信息（标题、描述、截图 URL），可直接读取 [zentao-cli.md](references/zentao-cli.md)。
 - **海星、数桥、区域节点、Compose/Kubernetes、端口或 workload 映射** → 读 [ylk-service-topology.md](references/ylk-service-topology.md)；环境组、SSH-MCP IP 和节点选择读 [ylk-environment-access.md](references/ylk-environment-access.md)。实时资源优先于文档和 memory。
 - **YLK 架构导航、仓库职责、业务主链或部署模型背景** → 读 [ylk-architecture-and-deployment.md](references/ylk-architecture-and-deployment.md)，需要追溯原始材料时再读 [sources-and-freshness.md](references/sources-and-freshness.md)。
 - **Maven 构建、前端 lint/build、单测、CI/CD、发布和部署回归** → 读 [quality-and-delivery.md](references/quality-and-delivery.md)，以当前仓 `.gitlab-ci.yml` 和 includes 判断交付模型；默认跳过 Docker 镜像构建，只有 CI 明确要求镜像产物的目标服务才执行。Maven 命令还必须遵守本文件的“构建发现与执行规则”。
 - **文档来源、历史 memory、Beads 经验或事实冲突** → 读 [sources-and-freshness.md](references/sources-and-freshness.md)，按“当前代码/当前环境优先，历史资料辅助”的规则处理。
 - **本机浏览器调试端口** → 读私有 `custom.md`。它只保存本机 Playwright/CDP 配置，不提供 YLK 环境或业务拓扑事实。
+- **前端调试、多系统联动、无 Token 同源调用、E2E 测试验证** → 引用 `ylk-e2e-context` Skill。当本 Bugfix 流程需要"浏览器自动化页面操作 / 同源请求取证 / 跨系统流程串联 / CDP Profile 选择 / 失败证据收集"时，优先按该 Skill 执行；它覆盖单 CDP（127.0.0.1:9225）、页面 marker 身份选择、iframe/微前端导航、浏览器内 fetch、证据边界和副作用控制，能补全本 Skill 在前端运行时层面的专项能力。
 - **后端日志分析→编码→部署→验证的自动化闭环调试** → 引用 `ylk-backend-debug` Skill。当本 Bugfix 流程需要"看日志定位根因 → 编码修复 → Commit+Push → 触发 CI → 回到目标 pod 验证 API 200"的完整闭环时，优先按该 Skill 执行；它覆盖 GitLab CI manual pipeline（B00:clean / B0x:service / DD0x:service 形态）+ SSH MCP + kubectl 的组合场景，能补全本 Skill 在 K8s/CICD 层的验证闭环专项能力。
 
   **Context 传递规则：**`ylk-evidence-bugfix` 入口阶段已持有 SSH-MCP 连接名、目标 deployment/service、namespace、远端 GitLab host、本地当前分支等上下文，委托调用 `ylk-backend-debug` 时直接注入，不要重复 AskUserQuestion。仅当该 Skill 明确需要用户提供且本流程无法从既有证据推定时才提问——例如：SSH-MCP 连接名未明确、同一服务在多环境组均有同名 deployment 需要选择、分支状态与部署目标不一致需确认是否切分支。**能自动推断的就不问，以自动化推进为优先。**
+
+  **`ylk-zentao-bug-analysis` 上下文传递：**禅道 Bug ID 已由本流程提供时，直接注入给 `ylk-zentao-bug-analysis`，不重复 AskUserQuestion 确认 Bug 来源。仅需在禅道数据无法访问（token 过期 / CLI 不可用）或用户未提供 ID 时才追问。分析结果作为 Bugfix 规格的前置输入，不替代本流程的"先调查后计划"原则。
+
+  **`ylk-e2e-context` 上下文传递：**本流程已持有本机 CDP 端口（127.0.0.1:9225）时直接注入；环境组 / 目标页面身份待确认时按该 Skill 规则用 marker 选择，不做手动猜测。**能自动推断的就不问，以自动化推进为优先。**
 
 **引用边界：**`SKILL.md` 是执行规则的 source of truth；references 是按场景加载的操作资料；`custom.md` 是本机私有 overlay；memory、Beads 和历史文档只能提出假设，不能替代当前代码或环境验证。外部规范只可用于增强证据、授权、停止、委派和验收约束，不得引入与 YLK Bug 修复无关的 Skill 自检、通用 Agent 管理或产品决策能力。不要因为文件名相近而跳过索引或读取不适用的 reference。
 
@@ -129,7 +134,14 @@ test -x ./mvnw && echo wrapper-present
 
 ### 1. 将 Bug 单改写为可验证规格
 
-Bug 输入可以来自用户描述、已有 issue，或可选的禅道 Bug ID/链接。用户提供禅道来源时，按 [zentao-cli 输入来源](references/zentao-cli.md) 只读获取并标注来源；未提供时不得为了走流程强行查询禅道。
+Bug 输入可以来自用户描述、已有 issue，或禅道 Bug ID/链接。
+
+**禅道来源时，先委托 `ylk-zentao-bug-analysis` 做只读链路分析：**
+平台 → 界面 → 路由 → 组件 → API → 代码行号 + ADR 覆盖判断。
+分析结果作为 Bugfix 规格的前置上下文，直接汇入 Step 2 的调查方向。
+不自行内联执行禅道链路追踪（那正是 `ylk-zentao-bug-analysis` 的职责）。
+
+仅需要 Bug 基本信息（标题、描述、截图 URL、指派状态）时，可直接读取 [zentao-cli 输入来源](references/zentao-cli.md)；未提供禅道来源时不得为了走流程强行查询。
 
 用户要求“查看未提交内容”“准备提交”时，先做工作树盘点：逐仓执行 `git status --short --branch`、`git diff --stat`、`git diff --check`，标记每个文件与当前问题的关联及验证状态；只有用户明确要求 review/审查时才进入 code review 流程。跨仓工作树混有旧方案时，按用户明确指示决定是否 stash；不得自行丢弃、恢复或覆盖 stash。
 
