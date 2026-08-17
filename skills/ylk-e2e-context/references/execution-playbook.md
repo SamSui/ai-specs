@@ -165,4 +165,35 @@ API 取证不能替代真实 UI 操作来宣称 E2E 通过。数据库核对不�
 - 一次性测试夹具和临时文件路径。
 - 过期的系统、Profile、环境和部署映射。
 
-公共运行入口仍以 `scripts/playwright-e2e/` 的代码和 README 为准。数字、环境变量和页面身份应在运行时重新读取。
+公共运行入口仍以 `$YLK_ROOT/scripts/playwright-e2e/` 的代码和 README 为准。数字、环境变量和页面身份应在运行时重新读取。
+
+## 相关资料
+
+### 公共脚本与手册
+
+- [E2E README]($YLK_ROOT/scripts/playwright-e2e/README.md) → 运行前提、环境变量、证据目录和入口说明。
+- [Profile 选择器]($YLK_ROOT/scripts/playwright-e2e/ylk-profile.cjs) → CDP 连接、marker 读取、0/1/N 页面匹配和导航 helper。
+- [Runner]($YLK_ROOT/scripts/playwright-e2e/runner.js) → 测试调度、身份同步、步骤结果和产物清理。
+- [EvidenceCollector]($YLK_ROOT/scripts/playwright-e2e/evidence.js) → 网络摘要、截图和证据导出实现。
+
+### 项目文件型记忆
+
+- [E2E 接入规范](~/.claude/projects/-home-openclaw-Codes-ylk/memory/e2e-test-framework-r11.md) → 单 CDP、Profile marker、页面选择和证据规则。
+- [浏览器调试端口经验](~/.claude/projects/-home-openclaw-Codes-ylk/memory/browser-debug-ports.md) → 浏览器调试端口与身份隔离的历史踩坑。
+- [项目隶属关系](~/.claude/projects/-home-openclaw-Codes-ylk/memory/project-affiliations.md) → 多应用和微前端接入关系。
+- [工作台部署经验](~/.claude/projects/-home-openclaw-Codes-ylk/memory/workbench-deploy-architecture.md) → 微应用部署和页面定位的历史经验。
+
+### Beads 记忆
+
+Beads 记忆由 `bd` 管理，不对应可直接 include 的 Markdown 文件。使用以下查询读取：
+
+- `bd memories ylk-e2e-single-cdp-profile-marker` → 单 CDP、Profile marker 和用户名识别约束。
+- `bd memories ylk-adr-knowledge-carriers` → 任务期文档、记忆和 Beads 的知识承载边界。
+
+### 任务期历史手册
+
+以下文件名中的 `CURRENT_E2E` 是对应任务期间的文件名，不代表现在的规范；只提取流程经验和失败教训：
+
+- [E2E/CDP 历史说明]($YLK_ROOT/docs/adr-resource-mgmt-deviation-fix/008-e2e-framework-cdp-playwright.md)
+- [资源管理任务期 E2E 记录]($YLK_ROOT/docs/adr-resource-mgmt-deviation-fix/tasks/CURRENT_E2E.md)
+- [适配任务期 E2E 记录]($YLK_ROOT/docs/adr-adapt-ylk/tasks/CURRENT_E2E.md)
