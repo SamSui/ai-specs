@@ -4,8 +4,8 @@ description: |
   面向 YLK workspace 任意子项目的授权后交付流程：核验工作树和远端、按仓原子 commit、推送、依据目标仓当前 GitLab CI 建立服务到交付物的映射，并通过 glab 触发和跟踪构建与部署。
   触发词：commit push CI/CD 三连、提交推送发布、触发 GitLab 流水线、构建部署、交付上线。
 author: 顾小宇
-version: v1.0
-last_updated: 2026-08-14
+version: v1.1
+last_updated: 2026-08-24
 ---
 
 # YLK Delivery Triple
@@ -83,6 +83,8 @@ git log -1 --oneline
 - push 后先按 ref 和 commit SHA 定位已有自动创建的 pipeline；若该 pipeline 对应本次 commit，优先复用，不重复创建 pipeline。只有没有匹配 pipeline，且 `glab ci run --help` 已确认创建参数后，才创建分支 pipeline。
 - 先读取该 pipeline 的 job 清单，逐项核对 job ID、名称、状态、`when`、`needs` 和映射。手动 job 的启动方式取决于本机 CLI 能力：若 `glab` 明确支持对既有 pipeline play job，则使用该命令；否则调用 GitLab job play API，且只对已核对的精确 job ID 发起 `POST`。不得把创建 pipeline 的命令误用于启动已有 pipeline 的手动 job。
 - 手动 job 必须按映射顺序触发：先构建，构建成功且产物可用后再触发 deploy。不得为“完整性”触发不属于交付映射的 Docker、全量构建、测试或部署 job。
+- **Ⓐ 交付链闭环强制：触发构建 job 后，跟踪构建直到 success 是本次交付的一部分，不允许"play 之后丢给用户"。** 构建 success 后必须立即触发映射中的 deploy job（DD 系列），deploy success 后必须按「部署后回归」节收证。授权 `/ylk-delivery` = 授权完整链 commit → push → build → deploy → 回归验证；不得在 build success 后停手等用户追问（2026-08-24 事故：连续两轮只触发 B 系列构建 job、不触发 DD 部署 job，被用户纠正"你好像只做了 CI 不做 CD"）。
+- **Ⓑ 单次可观察快照的限制：** 快照规则禁止的是"无人监管的后台无限轮询"，不禁止"同一任务内的多次显式状态查询"。在同一个交付任务内查询构建/部署状态、构建完成后继续触发下一环节，属于任务内的连续步骤，不需要用户每次催促。正确形态：play B → 显式查状态（可间隔合理时间多查几次，每次报告）→ success → play DD → 查状态 → success → 回归验证收证 → 一次性汇报。
 - **调度与等待必须是单次、可观察快照。** 每次只查询一次 pipeline/job 状态并报告状态、job ID 和 URL；需要再次检查时在新的显式步骤中再查询。禁止后台无限循环、长时间 `sleep` 轮询、workflow agent、隐式重试或将等待任务交给无人监管的后台进程。用户指出构建已经完成时，先做一次状态快照并立即进入下一步，不得重新等待。
 - 失败时报告 job URL/ID、脱敏日志摘要、失败阶段、是否影响已交付服务；不得把 allow_failure、manual、waiting_for_resource、已创建 pipeline 或已发起 play 请求当作成功。
 
@@ -104,6 +106,12 @@ git log -1 --oneline
 
 **继续调查但不宣称完成：** 普通只读命令失败、局部 CI 配置歧义、历史资料冲突或单个远程探针失败时，记录脱敏错误并继续用当前代码、CI 配置、日志与本地证据调查；只有该缺口阻断下一步外部动作时才停止该分支。
 
+**交付未完成的判定（任一命中即不得宣称交付完成、不得收尾）：**
+
+1. 映射中的 deploy job（DD 系列）尚未触发或尚未 success；
+2. 「部署后回归」节的证据尚未收集；
+3. build success 但 deploy 被跳过且没有用户明确豁免。
+
 完成前逐项自检：
 
 1. 每个 commit、push、pipeline、job 与部署是否均有已核对的仓、分支、remote、映射和授权？
@@ -111,5 +119,6 @@ git log -1 --oneline
 3. 是否将未执行、失败、allow_failure 或仅创建的 pipeline 写成成功？
 4. 是否泄露、持久化或提交了 Token、密码、私钥、完整连接串或私有配置？
 5. 每个仓是否保持独立、原子且可追溯的提交？
+6. **build → deploy → 回归的完整链是否走完？是否在 build success 后停下等用户？**
 
 全部满足后，报告每仓提交 SHA、推送目标、pipeline/job 状态、实际交付物、部署与回归证据，以及未执行项和剩余风险。
