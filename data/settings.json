@@ -1,0 +1,109 @@
+{
+  "commandTimeouts": {
+    "git clone": 600,
+    "git fetch": 600,
+    "git pull": 600
+  },
+  "defaultShell": "powershell",
+  "enabledPlugins": {
+    "andrej-karpathy-skills@karpathy-skills": true,
+    "chrome-devtools-mcp@claude-plugins-official": true,
+    "claude-code-setup@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "document-skills@anthropic-agent-skills": true,
+    "feature-dev@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "github@claude-plugins-official": true,
+    "gitlab@claude-plugins-official": true,
+    "obsidian@obsidian-skills": true,
+    "playwright@claude-plugins-official": true,
+    "powershell-editor-services@claude-code-lsps": true,
+    "pr-review-toolkit@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "rust-analyzer@claude-code-lsps": true,
+    "security-guidance@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true
+  },
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "PROXY_MANAGED",
+    "ANTHROPIC_BASE_URL": "http://127.0.0.1:15721",
+    "ANTHROPIC_DEFAULT_FABLE_MODEL": "claude-fable-5[1M]",
+    "ANTHROPIC_DEFAULT_FABLE_MODEL_NAME": "gpt-5.6-terra",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME": "gpt-5.6-terra",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-8[1M]",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "gpt-5.6-terra",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6[1M]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "gpt-5.6-terra",
+    "API_TIMEOUT_MS": "3000000",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_MAX_CONTEXT_TOKENS": "225000",
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "32768",
+    "CLAUDE_CODE_PLUGIN_GIT_TIMEOUT_MS": "300000",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "gpt-5.6-terra[1M]",
+    "CLAUDE_CODE_USE_POWERSHELL_TOOL": "1",
+    "DISABLE_AUTOUPDATER": "1",
+    "ENABLE_TOOL_SEARCH": "true"
+  },
+  "extraKnownMarketplaces": {
+    "anthropic-agent-skills": {
+      "source": {
+        "repo": "anthropics/skills",
+        "source": "github"
+      }
+    },
+    "claude-code-lsps": {
+      "source": {
+        "repo": "Piebald-AI/claude-code-lsps",
+        "source": "github"
+      }
+    },
+    "ecc": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/affaan-m/everything-claude-code.git"
+      }
+    },
+    "obsidian-skills": {
+      "source": {
+        "repo": "kepano/obsidian-skills",
+        "source": "github"
+      }
+    },
+    "piebald-lsps": {
+      "source": {
+        "repo": "Piebald-AI/claude-code-lsps",
+        "source": "github"
+      }
+    },
+    "pua-skills": {
+      "source": {
+        "repo": "tanweai/pua",
+        "source": "github"
+      }
+    }
+  },
+  "includeCoAuthoredBy": false,
+  "permissions": {
+    "defaultMode": "bypassPermissions",
+    "deny": [
+      "DesignSync",
+      "NotebookEdit",
+      "PushNotification",
+      "RemoteTrigger",
+      "CronCreate",
+      "CronDelete",
+      "CronList"
+    ]
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "statusLine": {
+    "command": "\"C:\\Program Files\\nodejs\\node.exe\" \"C:/Users/xisui/.claude/hud/omc-hud.mjs\"",
+    "type": "command"
+  }
+}
